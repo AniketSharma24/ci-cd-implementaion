@@ -1,0 +1,31 @@
+name: CI Pipeline
+
+on:
+  push: # Runs on every commit
+    branches:
+      - master
+      - develop # Add any other branches you work with
+  pull_request: # Runs on every PR
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Use the latest Ubuntu as the build environment
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Fetches your code
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18 # Change this if you're using a different Node version
+          cache: npm # Cache dependencies to speed up builds
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run build
+        run: npm run build # Ensures the app builds successfully
+
+      - name: Run tests
+        run: npm test # Run tests if you have them
